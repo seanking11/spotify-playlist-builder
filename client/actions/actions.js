@@ -6,6 +6,7 @@ export const SPOTIFY_TOKENS = 'SPOTIFY_TOKENS';
 export const SPOTIFY_ME_BEGIN = 'SPOTIFY_ME_BEGIN';
 export const SPOTIFY_ME_SUCCESS = 'SPOTIFY_ME_SUCCESS';
 export const SPOTIFY_ME_FAILURE = 'SPOTIFY_ME_FAILURE';
+export const SPOTIFY_ME_RECENT = 'SPOTIFY_ME_RECENT'
 
 /** set the app's access and refresh tokens */
 export function setTokens({accessToken, refreshToken}) {
@@ -25,4 +26,15 @@ export function getMyInfo() {
       dispatch({ type: SPOTIFY_ME_FAILURE, error: e });
     });
   };
+}
+
+export function getMyRecent() {
+  return dispatch => {
+    dispatch({ type: SPOTIFY_ME_BEGIN });
+    spotifyApi.getGeneric('https://api.spotify.com/v1/me/player/recently-played').then(data => {
+      dispatch({ type: SPOTIFY_ME_RECENT, data: data })
+    }).catch(e => {
+      dispatch({ type: SPOTIFY_ME_FAILURE, error: e });
+    })
+  }
 }

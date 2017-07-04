@@ -1,5 +1,5 @@
 import {
-  SPOTIFY_TOKENS, SPOTIFY_ME_BEGIN, SPOTIFY_ME_SUCCESS, SPOTIFY_ME_FAILURE
+  SPOTIFY_TOKENS, SPOTIFY_ME_BEGIN, SPOTIFY_ME_SUCCESS, SPOTIFY_ME_FAILURE, SPOTIFY_ME_RECENT
 } from '../actions/actions';
 
 /** The initial state; no tokens and no user info */
@@ -19,6 +19,9 @@ const initialState = {
     product: null,
     type: null,
     uri: null,
+  },
+  tracks: {
+    loading: true
   }
 };
 
@@ -34,8 +37,9 @@ export default function reduce(state = initialState, action) {
 
   // set our loading property when the loading begins
   case SPOTIFY_ME_BEGIN:
+  console.log('hiihihi')
     return Object.assign({}, state, {
-      user: Object.assign({}, state.user, {loading: true})
+      tracks: Object.assign({}, state.tracks, {loading: true})
     });
 
   // when we get the data merge it in
@@ -43,6 +47,14 @@ export default function reduce(state = initialState, action) {
     return Object.assign({}, state, {
       user: Object.assign({}, state.user, action.data, {loading: false})
     });
+
+  // when we get recent
+  case SPOTIFY_ME_RECENT: {
+    console.log(action.data)
+    return Object.assign({}, state, {
+      tracks: Object.assign({}, state.tracks, action.data, {loading: false})
+    });
+  }
 
   // currently no failure state :(
   case SPOTIFY_ME_FAILURE:
