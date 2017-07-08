@@ -37,7 +37,6 @@ export default function reduce(state = initialState, action) {
 
   // set our loading property when the loading begins
   case SPOTIFY_ME_BEGIN:
-  console.log('hiihihi')
     return Object.assign({}, state, {
       tracks: Object.assign({}, state.tracks, {loading: true})
     });

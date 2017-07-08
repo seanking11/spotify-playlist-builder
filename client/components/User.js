@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect }      from 'react-redux';
-import { Table } from 'react-bootstrap'
+import { Table, Grid, Row, Col } from 'react-bootstrap'
 import {
   getMyInfo,
   setTokens,
@@ -35,7 +35,16 @@ class User extends Component {
             <h2>{`Logged in as`}</h2>
             <div className="user-content"></div>
             <hr />
-            <PlaylistTable items={tracks.items} />
+            <Grid>
+              <Row>
+                <Col xs={6}>
+                  <PlaylistTable items={tracks.items} />
+                </Col>
+                <Col xs={6}>
+                  <PlaylistTable items={tracks.items} />
+                </Col>
+              </Row>
+            </Grid>
           </div>
         );
       }
